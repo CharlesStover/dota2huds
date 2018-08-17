@@ -1,0 +1,12 @@
+{
+  "name": "dota2huds",
+  "version": "1.0.0",
+  "description": "A gallery of Dota 2 HUDs.",
+  "main": "src/index.js",
+  "repository": "https://github.com/GamingMedley/dota2-hud-gallery.git",
+  "author": "Charles Stover <webmaster@gamingmedley.com>",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.16.3"
+  }
+}
