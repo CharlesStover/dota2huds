@@ -1,11 +1,3 @@
 RewriteEngine On
 
-RewriteRule ^sitemap\.xml$ sitemap.xml.php [L,NC]
-
 RewriteRule ([\+\-\d\w]+)/style(\d+)?\.css$ hud.css.php?hud=$1&style=$2 [L,NC]
-RewriteRule ^huds\.js$ huds.js.php [L,NC]
-RewriteRule ^global\.css$ global.css.php [L,NC]
-RewriteRule \.png$ optimize.png.php [L,NC]
-
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule .+\/(?:index\.html)? index.php [L,NC]
