@@ -6,6 +6,22 @@ const hudsEntries = Object.entries(huds);
 
 
 
+// Directories
+for (const [ hud, styles ] of hudsEntries) {
+  if (hud === 'default') {
+    continue;
+  }
+  fs.mkdirSync(__dirname + '/../build/' + hud);
+  if (Array.isArray(styles)) {
+    const stylesLength = styles.length;
+    for (let style = 2; style < stylesLength; style++) {
+      fs.mkdirSync(__dirname + '/../build/' + hud + '/' + (style - 1));
+    }
+  }
+}
+
+
+
 // CSS
 const elements = Object.entries({
   'background-4-3': 'inventory/background_4_3.png',
@@ -13,6 +29,7 @@ const elements = Object.entries({
   'center-left': 'actionpanel/center_left.png',
   'center-left-wide': 'actionpanel/center_left_wide.png',
   'center-right': 'actionpanel/center_right.png',
+  'day-night': 'scoreboard/daynight.png',
   'light-4-3': 'actionpanel/light_4_3.png',
   'light-16-9': 'actionpanel/light_16_9.png',
   'light-16-10': 'actionpanel/light_16_10.png',
@@ -31,18 +48,19 @@ const elements = Object.entries({
   'spacer-16-10': 'actionpanel/spacer_16_10.png',
   'stash-lower': 'inventory/stash_lower.png',
   'stash-lower:hover': 'inventory/stash_active_lower.png',
-  'stash-upper': 'inventory/stash_upper.png'
+  'stash-upper': 'inventory/stash_upper.png',
+  topbar: 'scoreboard/topbar.png'
 });
 
 // Create CSS for an image by checking that it exists.
-const cssIfFile = (element, hud, url, style = null) => {
+const cssIfFile = (element, hud, url, style = 0) => {
   const styleUrl =
-    style === null ?
+    style === 0 ?
       url :
       url.replace(/^(\w+)/, '$1/style' + style);
   return (
     fs.existsSync(__dirname + '/../hud_skins/' + hud + '/' + styleUrl) ?
-      (style === null ? '' : '.style' + style + ' ') +
+      (style === 0 ? '' : '.style' + style + ' ') +
       '#' + element + '{background-image:url(/' + hud + '/' + styleUrl + ')}' :
       ''
   );
@@ -74,15 +92,19 @@ for (const [ hud, styles ] of hudsEntries) {
   }
 
   // Mandatory day-night and topbar with default fallback.
-  css += cssIfFile('day-night', hud, 'scoreboard/daynight.png') || cssIfFile('day-night', 'default', 'scoreboard/daynight.png');
-  css += cssIfFile('topbar', hud, 'scoreboard/topbar.png') || cssIfFile('topbar', 'default', 'scoreboard/topbar.png');
+  if (!fs.existsSync(__dirname + '/../hud_skins/' + hud + '/scoreboard/daynight.png')) {
+    css += cssIfFile('day-night', 'default', 'scoreboard/daynight.png');
+  }
+  if (!fs.existsSync(__dirname + '/../hud_skins/' + hud + '/scoreboard/topbar.png')) {
+    css += cssIfFile('topbar', 'default', 'scoreboard/topbar.png');
+  }
 
   // If the HUD has styles,
   if (Array.isArray(styles)) {
     const stylesLength = styles.length;
 
     // Check each style for images.
-    for (let style = 1; style < stylesLength; style++) {
+    for (let style = 2; style < stylesLength; style++) {
 
       // For each element,
       for (const [ element, urls ] of elements) {
@@ -90,7 +112,7 @@ for (const [ hud, styles ] of hudsEntries) {
         // Check each image that element may have.
         if (Array.isArray(urls)) {
           for (const url of urls) {
-            const elementCss = cssIfFile(element, hud, url, style);
+            const elementCss = cssIfFile(element, hud, url, style - 1);
             if (elementCss !== '') {
               css += elementCss;
               break;
@@ -100,14 +122,14 @@ for (const [ hud, styles ] of hudsEntries) {
 
         // If that element has only one image, check only it.
         else {
-          css += cssIfFile(element, hud, urls, style);
+          css += cssIfFile(element, hud, urls, style - 1);
         }
       }
     }
   }
 
   fs.writeFileSync(
-    __dirname + '/../build/' + hud + '.css',
+    __dirname + '/../build/' + hud + '/screen.css',
     css
   );
 }
@@ -117,6 +139,9 @@ for (const [ hud, styles ] of hudsEntries) {
 // HTML
 const indexHtml = fs.readFileSync(__dirname + '/../src/index.html').toString();
 for (const [ hudId, styles ] of hudsEntries) {
+  if (hudId === 'default') {
+    continue;
+  }
   const hudName =
     Array.isArray(styles) ?
       styles[0] :
@@ -143,9 +168,14 @@ for (const [ hudId, styles ] of hudsEntries) {
     const stylesLength = styles.length;
     for (let style = 1; style < stylesLength; style++) {
       fs.writeFileSync(
-        __dirname + '/../build/' + hudId + (style > 1 ? '/' + style : ''),
+        __dirname + '/../build/' + hudId + '/' + (style === 1 ? '' : style + '/') + 'index.html',
         index
-          .replace(/${BODY_CLASS}/, ' class="style' + style + '"')
+          .replace(
+            /${BODY_CLASS}/,
+            style === 1 ?
+              '' :
+              ' class="style' + (style - 1) + '"'
+          )
           .replace(/${META_DESCRIPTION}/, 'the ' + hudName + ' HUD, ' + styles[style] + ' style')
           .replace(
             /${META_KEYWORDS}/,
@@ -171,7 +201,7 @@ for (const [ hudId, styles ] of hudsEntries) {
   // Create a single page if there's only one style.
   else {
     fs.writeFileSync(
-      __dirname + '/../build/' + hudId,
+      __dirname + '/../build/' + hudId + '/index.html',
       index
         .replace(/${BODY_CLASS}/, '')
         .replace(/${META_DESCRIPTION}/, 'the ' + hudName + ' HUD')
@@ -195,9 +225,14 @@ fs.writeFileSync(
 
 
 // huds.js
+const hudEntriesSort = ([ , hudName1 ], [ , hudName2 ]) =>
+  (Array.isArray(hudName1) ? hudName1[0] : hudName1) <
+  (Array.isArray(hudName2) ? hudName2[0] : hudName2) ?
+    -1 :
+    1;
 fs.writeFileSync(
   __dirname + '/../build/huds.js',
-  'var HUDs = ' + JSON.stringify(huds) + ';\n'
+  'var HUDs = ' + JSON.stringify(hudsEntries.sort(hudEntriesSort)) + ';\n'
 );
 
 
