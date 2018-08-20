@@ -7,7 +7,7 @@ const hudsEntries = Object.entries(huds);
 
 
 // Directories
-fs.mkdir(__dirname + '/../build');
+fs.mkdirSync(__dirname + '/../build');
 for (const [ hud, styles ] of hudsEntries) {
   fs.mkdirSync(__dirname + '/../build/' + hud);
   if (Array.isArray(styles)) {
@@ -135,7 +135,9 @@ for (const [ hud, styles ] of hudsEntries) {
 
 
 // HTML
-const indexHtml = fs.readFileSync(__dirname + '/../src/index.html').toString();
+const indexHtml = fs.readFileSync(__dirname + '/../src/index.html').toString()
+  .replace(/\r?\n\s*/g, '')
+  .replace(/<!\-\-.+?\-\->/g, '') + '\n';
 for (const [ hudId, styles ] of hudsEntries) {
   if (hudId === 'default') {
     continue;
@@ -147,6 +149,7 @@ for (const [ hudId, styles ] of hudsEntries) {
 
   const index =
     indexHtml
+      .replace(/\${FAVICON}/, hudId + '/icon.png')
       .replace(/\${HUD_ID}/, hudId)
       .replace(
         /\${MARKET_LINK}/,
@@ -174,24 +177,37 @@ for (const [ hudId, styles ] of hudsEntries) {
               '' :
               ' class="style' + (style - 1) + '"'
           )
-          .replace(/\${META_DESCRIPTION}/, 'the ' + hudName + ' HUD, ' + styles[style] + ' style')
+          .replace(
+            /\${META_DESCRIPTION}/,
+            'the ' + hudName + ' HUD' +
+            (
+              styles[style] === null ?
+                '' :
+                ', ' + styles[style] + ' style'
+            )
+          )
           .replace(
             /\${META_KEYWORDS}/,
-            metaKeywords + ', ' +
-            'dota ' + styles[style] + ', ' +
-            'dota ' + styles[style] + ' hud, ' +
-            'dota ' + hudName + ' ' + styles[style] + ', ' +
-            'dota ' + hudName + ' ' + styles[style] + ' hud, ' +
-            'dota 2 ' + styles[style] + ', ' +
-            'dota 2 ' + styles[style] + ' hud, ' +
-            'dota 2 ' + hudName + ' ' + styles[style] + ', ' +
-            'dota 2 ' + hudName + ' ' + styles[style] + ' hud, ' +
-            styles[style] + ', ' +
-            styles[style] + ' hud, ' +
-            hudName + ' ' + styles[style] + ', ' +
-            hudName + ' ' + styles[style] + ' hud'
+            metaKeywords +
+            (
+              styles[style] === null ?
+                '' :
+                ', dota ' + styles[style] + ' hud' +
+                ', dota ' + hudName + ' ' + styles[style] +
+                ', dota ' + hudName + ' ' + styles[style] + ' hud' +
+                ', dota 2 ' + styles[style] + ' hud' +
+                ', dota 2 ' + hudName + ' ' + styles[style] +
+                ', dota 2 ' + hudName + ' ' + styles[style] + ' hud' +
+                ', ' + hudName + ' ' + styles[style] +
+                ', ' + hudName + ' ' + styles[style] + ' hud'
+            )
           )
-          .replace(/\${TITLE}/, hudName + '(' + styles[style] + ') - ')
+          .replace(
+            /\${TITLE}/,
+            hudName +
+            (styles[style] === null ? '' : ' (' + styles[style] + ')') +
+            ' - '
+          )
       );
     }
   }
@@ -213,6 +229,7 @@ fs.writeFileSync(
   __dirname + '/../build/index.html',
   indexHtml
     .replace(/\${BODY_CLASS}/, '')
+    .replace(/\${FAVICON}/, 'favicon.ico')
     .replace(/\${HUD_ID}/, 'default')
     .replace(/\${MARKET_LINK}/, '')
     .replace(/\${META_DESCRIPTION}/, 'all the Dota 2 HUDs')
@@ -231,6 +248,17 @@ const hudEntriesSort = ([ , hudName1 ], [ , hudName2 ]) =>
 fs.writeFileSync(
   __dirname + '/../build/huds.js',
   'var HUDs = ' + JSON.stringify(hudsEntries.sort(hudEntriesSort)) + ';\n'
+);
+
+
+
+// screen.css
+fs.writeFileSync(
+  __dirname + '/../build/screen.css',
+  fs.readFileSync(__dirname + '/../src/screen.css').toString()
+    .replace(/\r?\n\s*/g, '')
+    .replace(/\/\*.+?\*\//g, '')
+    .replace(/;}/g, '}') + '\n'
 );
 
 

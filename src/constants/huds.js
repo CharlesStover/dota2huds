@@ -73,7 +73,7 @@ module.exports = {
   royal_crypt_hud:                  'Royal Crypt',
   sample:                           'Sample (?)', // Unused?
   hud_sandsofluxor:                 'Sands of Luxor',
-  dreamleague:                      [ 'Scions of the Sky', false, 'Alternative Style' ],
+  dreamleague:                      [ 'Scions of the Sky', null, 'Alternative Style' ],
   sltvx:                            'SLTV Star Series X',
   winter:                           'Snows of Frostivus',
   hud_springessence:                'Spring Essence',
