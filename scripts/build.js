@@ -7,10 +7,8 @@ const hudsEntries = Object.entries(huds);
 
 
 // Directories
+fs.mkdir(__dirname + '/../build');
 for (const [ hud, styles ] of hudsEntries) {
-  if (hud === 'default') {
-    continue;
-  }
   fs.mkdirSync(__dirname + '/../build/' + hud);
   if (Array.isArray(styles)) {
     const stylesLength = styles.length;
@@ -149,9 +147,9 @@ for (const [ hudId, styles ] of hudsEntries) {
 
   const index =
     indexHtml
-      .replace(/${HUD_ID}/, hudId)
+      .replace(/\${HUD_ID}/, hudId)
       .replace(
-        /${MARKET_LINK}/,
+        /\${MARKET_LINK}/,
         '<a href="http://steamcommunity.com/market/search?category_570_Hero%5B%5D=any&amp;category_570_Slot%5B%5D=any&amp;category_570_Type%5B%5D=tag_hud_skin&amp;appid=570&amp;q=' + encodeURIComponent(hudName) + '" id="market" rel="nofollow noopener noreferrer" target="_blank">market</a>'
       );
 
@@ -168,17 +166,17 @@ for (const [ hudId, styles ] of hudsEntries) {
     const stylesLength = styles.length;
     for (let style = 1; style < stylesLength; style++) {
       fs.writeFileSync(
-        __dirname + '/../build/' + hudId + '/' + (style === 1 ? '' : style + '/') + 'index.html',
+        __dirname + '/../build/' + hudId + '/' + (style === 1 ? '' : (style - 1) + '/') + 'index.html',
         index
           .replace(
-            /${BODY_CLASS}/,
+            /\${BODY_CLASS}/,
             style === 1 ?
               '' :
               ' class="style' + (style - 1) + '"'
           )
-          .replace(/${META_DESCRIPTION}/, 'the ' + hudName + ' HUD, ' + styles[style] + ' style')
+          .replace(/\${META_DESCRIPTION}/, 'the ' + hudName + ' HUD, ' + styles[style] + ' style')
           .replace(
-            /${META_KEYWORDS}/,
+            /\${META_KEYWORDS}/,
             metaKeywords + ', ' +
             'dota ' + styles[style] + ', ' +
             'dota ' + styles[style] + ' hud, ' +
@@ -193,7 +191,7 @@ for (const [ hudId, styles ] of hudsEntries) {
             hudName + ' ' + styles[style] + ', ' +
             hudName + ' ' + styles[style] + ' hud'
           )
-          .replace(/${TITLE}/, hudName + '(' + styles[style] + ') - ')
+          .replace(/\${TITLE}/, hudName + '(' + styles[style] + ') - ')
       );
     }
   }
@@ -203,10 +201,10 @@ for (const [ hudId, styles ] of hudsEntries) {
     fs.writeFileSync(
       __dirname + '/../build/' + hudId + '/index.html',
       index
-        .replace(/${BODY_CLASS}/, '')
-        .replace(/${META_DESCRIPTION}/, 'the ' + hudName + ' HUD')
-        .replace(/${META_KEYWORDS}/, metaKeywords)
-        .replace(/${TITLE}/, hudName + ' - ')
+        .replace(/\${BODY_CLASS}/, '')
+        .replace(/\${META_DESCRIPTION}/, 'the ' + hudName + ' HUD')
+        .replace(/\${META_KEYWORDS}/, metaKeywords)
+        .replace(/\${TITLE}/, hudName + ' - ')
     );
   }
 }
@@ -214,12 +212,12 @@ for (const [ hudId, styles ] of hudsEntries) {
 fs.writeFileSync(
   __dirname + '/../build/index.html',
   indexHtml
-    .replace(/${BODY_CLASS}/, '')
-    .replace(/${HUD_ID}/, 'default')
-    .replace(/${MARKET_LINK}/, '')
-    .replace(/${META_DESCRIPTION}/, 'all the Dota 2 HUDs')
-    .replace(/${META_KEYWORDS}/, 'dota 2 hud gallery, dota 2 hud skins, dota 2 huds, dota hud gallery, dota hud skins, dota huds')
-    .replace(/${TITLE}/, '')
+    .replace(/\${BODY_CLASS}/, '')
+    .replace(/\${HUD_ID}/, 'default')
+    .replace(/\${MARKET_LINK}/, '')
+    .replace(/\${META_DESCRIPTION}/, 'all the Dota 2 HUDs')
+    .replace(/\${META_KEYWORDS}/, 'dota 2 hud gallery, dota 2 hud skins, dota 2 huds, dota hud gallery, dota hud skins, dota huds')
+    .replace(/\${TITLE}/, '')
 );
 
 
