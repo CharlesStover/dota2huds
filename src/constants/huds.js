@@ -1,5 +1,5 @@
 module.exports = {
-	default:                          'Select a HUD',
+  default:                          'Select a HUD',
   alliance:                         [ 'Alliance', 'Normal', 'Rainy' ],
   antiquity:                        'Antiquity',
   armory:                           'Armory', // Not in game; used for MLG Stronghold HUD
