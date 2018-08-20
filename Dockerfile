@@ -1,6 +1,6 @@
 FROM node:alpine AS builder
 WORKDIR /var/www
-COPY helpers scripts src package.json ./
+COPY helpers hud_skins scripts src package.json ./
 RUN yarn
 RUN yarn build
 

@@ -97,6 +97,6 @@ module.exports = {
   steelseries_bamboo:               'Vermilion',
   vici_gaming:                      'ViCi Gaming',
   virtus_pro:                       'Virtus.Pro',
-  guardian_angel:                   'Winged Guardian'
+  guardian_angel:                   'Winged Guardian',
   workshop_ingame_test:             'Workshop In-Game Test (?)', // Unused?
 };

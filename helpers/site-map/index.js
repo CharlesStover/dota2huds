@@ -7,12 +7,16 @@ class SiteMap {
     this._dir = './';
     this._loc = loc;
     this._sitemap = '';
+    this.fileMTime = this.fileMTime.bind(this);
   }
 
-  fileMTime = file =>
-    fs.existsSync(this._dir + file) ?
-      fs.statSync(this._dir + file).mtimeMs :
-      0;
+  fileMTime(file) {
+    return (
+      fs.existsSync(this._dir + file) ?
+        fs.statSync(this._dir + file).mtimeMs :
+        0
+    );
+  }
 
   setDir(dir) {
     this._dir = dir + '/';
@@ -52,11 +56,6 @@ class SiteMap {
     for (let x = 0; x < urlsLength; x++) {
       this.url(...urls[x]);
     }
-    return this;
-  }
-
-  writeSync(pathName) {
-    fs.writeFileSync(pathName, this.toString());
     return this;
   }
 }

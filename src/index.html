@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<title>Dota 2 HUDs</title>
+		<title>${TITLE}Dota 2 HUDs</title>
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
-		<link rel="stylesheet" media="screen" type="text/css" href="/assets/screen.css" />
-		<link rel="stylesheet" media="screen" type="text/css" href="/default.css" title="Default" />
+		<link rel="stylesheet" media="screen" type="text/css" href="/screen.css" />
     <meta charset="utf-8" />
+    <meta name="description" content="Try before you buy! View a live render of ${META_DESCRIPTION}." />
+    <meta name="keywords" content="${META_KEYWORDS}" />
 		<meta name="viewport" content="initial-scale=1.0, width=device-width" />
   </head>
-<body>
+  <body${BODY_CLASS}>
     <div id="top">
 
       <!-- scoreboard -->
@@ -49,8 +50,14 @@
       <div id="stash-upper"></div>
       <div id="stash-lower"></div>
     </div>
+
     <script type="text/javascript" src="/resize.js"></script>
 		<script type="text/javascript" src="/huds.js"></script>
-    <a href="http://steamcommunity.com/market/search?category_570_Hero%5B%5D=any&amp;category_570_Slot%5B%5D=any&amp;category_570_Type%5B%5D=tag_hud_skin&amp;appid=570&amp;q=<?php echo rawurlencode(preg_replace('/ \(.+\)$/', '', HUD_NAME)); ?>" id="market" target="_blank">market</a>
+		<script type="text/javascript" src="/gallery.js"></script>
+
+    <strong><span id="ar-4-3">4:3</span><span id="ar-16-9">16:9</span><span id="ar-16-10">16:10</span></strong>
+
+    ${MARKET_LINK}
+		<link rel="stylesheet" media="screen" type="text/css" href="/${HUD_ID}.css" />
   </body>
 </html>
