@@ -1,6 +1,7 @@
 FROM node:alpine AS builder
 WORKDIR /var/www
-COPY package.json .
+COPY helpers scripts src package.json ./
+RUN yarn
 RUN yarn build
 
 FROM nginx:alpine

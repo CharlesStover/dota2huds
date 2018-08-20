@@ -1,16 +1,22 @@
 const fs = require('fs');
 const yyyyMmDd = require('./yyyy-mm-dd');
 
-const fileMTime = file =>
-  fs.existsSync(file) ?
-    fs.statSync(file).mtimeMs :
-    0;
-
 class SiteMap {
 
   constructor(loc) {
+    this._dir = './';
     this._loc = loc;
     this._sitemap = '';
+  }
+
+  fileMTime = file =>
+    fs.existsSync(this._dir + file) ?
+      fs.statSync(this._dir + file).mtimeMs :
+      0;
+
+  setDir(dir) {
+    this._dir = dir + '/';
+    return this;
   }
 
   toString() {
@@ -22,12 +28,12 @@ class SiteMap {
     );
   }
 
-  url(loc, lastmodFiles, changefreq, priority = 0.5) {
+  url(loc, changefreq, priority = 0.5, lastmodFiles = []) {
     const _lastmodFiles =
       Array.isArray(lastmodFiles) ?
         [ ...lastmodFiles ] :
         [ lastmodFiles ];
-    const lastmods = _lastmodFiles.map(fileMTime);
+    const lastmods = _lastmodFiles.map(this.fileMTime);
     const lastmod = new Date(Math.max.apply(null, lastmods));
     this._sitemap +=
       '<url>' +

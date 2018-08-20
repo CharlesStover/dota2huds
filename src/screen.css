@@ -50,14 +50,14 @@
 }
 
 #icon-preview-bottom {
-	background-image: url("images/icon-previews/bottom-4-3.png");
+	background-image: url("/bottom-4-3.png");
 	height: 335px;
 	width: 2134px;
 	left: 0;
 }
 
 #icon-preview-top {
-	background-image: url("images/icon-previews/top-4-3.png");
+	background-image: url("/top-4-3.png");
 	height: 91px;
 	width: 2134px;
 	left: 0;
@@ -212,14 +212,14 @@
 	}
 
 	#icon-preview-bottom {
-		background-image: url("images/icon-previews/bottom-16-10.png");
+		background-image: url("/bottom-16-10.png");
 		height: 431px;
 		width: 2554px;
 		left: 0;
 	}
 
 	#icon-preview-top {
-		background-image: url("images/icon-previews/top-16-10.png");
+		background-image: url("/top-16-10.png");
 		height: 91px;
 		width: 2554px;
 		left: 0;
@@ -376,14 +376,14 @@
 	}
 
 	#icon-preview-bottom {
-		background-image: url("images/icon-previews/bottom-16-9.png");
+		background-image: url("/bottom-16-9.png");
 		height: 387px;
 		width: 2553px;
 		left: 0;
 	}
 
 	#icon-preview-top {
-		background-image: url("images/icon-previews/top-16-9.png");
+		background-image: url("/top-16-9.png");
 		height: 90px;
 		width: 2560px;
 		left: 0;
@@ -481,22 +481,22 @@
 /* Global */
 
 a {
-	color: #c0c0c0;
-	cursor: url("images/cursors/move.png"), pointer;
+	color: #C0C0C0;
+	cursor: url("/cursor-move.png"), pointer;
 	text-decoration: none;
 }
 
 	a:hover {
-		color: #f0f0f0;
+		color: #F0F0F0;
 	}
 
 body {
 	background-color: #252525;
-	background-image: url("images/background.jpg");
+	background-image: url("/background.jpg");
 	background-position: center center;
 	background-repeat: no-repeat;
 	background-size: 100% 100%;
-	color: #f0f0f0;
+	color: #F0F0F0;
 	font-size: 16px;
 	margin: 0;
 	padding: 0;
@@ -514,27 +514,6 @@ body {
 
 	#bottom > div {
 		bottom: 0;
-	}
-
-.copied {
-	margin-left: 1em;
-	opacity: 0;
-}
-
-	.copied:after {
-		background-color: #252525;
-		color: #78cfa9;
-		content: "Copied!";
-		font-family: monospace;
-		font-weight: bold;
-		padding: 0.5em 1em;
-	}
-
-	.copied.animate {
-		-moz-animation: fade-out 2.5s ease-in;
-		-o-animation: fade-out 2.5s ease-in;
-		-webkit-animation: fade-out 2.5s ease-in;
-		animation: fade-out 2.5s ease-in;
 	}
 
 #day-night {
@@ -557,7 +536,7 @@ html {
 input {
 	background-color: #101010;
 	border: 1px solid #000000;
-	color: #f0f0f0;
+	color: #F0F0F0;
 	margin-right: 0.5em;
 	padding: 0.2em;
 }
@@ -607,7 +586,7 @@ label {
 
 #minimap {
 	background-color: #101010;
-	background-image: url("images/minimap.jpg");
+	background-image: url("/minimap.jpg");
 	background-position: center center;
 	background-size: 100% 100%;
 }
@@ -651,7 +630,7 @@ html {
 
 body,
 select {
-	cursor: url("images/cursors/default.png"), default;
+	cursor: url("/cursor-default.png"), default;
 }
 
 #icon-preview-1,
