@@ -150,11 +150,7 @@ for (const [ hudId, styles ] of hudsEntries) {
   const index =
     indexHtml
       .replace(/\${FAVICON}/, hudId + '/icon.png')
-      .replace(/\${HUD_ID}/, hudId)
-      .replace(
-        /\${MARKET_LINK}/,
-        '<a href="http://steamcommunity.com/market/search?category_570_Hero%5B%5D=any&amp;category_570_Slot%5B%5D=any&amp;category_570_Type%5B%5D=tag_hud_skin&amp;appid=570&amp;q=' + encodeURIComponent(hudName) + '" id="market" rel="nofollow noopener noreferrer" target="_blank">market</a>'
-      );
+      .replace(/\${HUD_ID}/, hudId);
 
   const metaKeywords =
     'dota ' + hudName + ', ' +
@@ -178,13 +174,23 @@ for (const [ hudId, styles ] of hudsEntries) {
               ' class="style' + (style - 1) + '"'
           )
           .replace(
+            /\${HUD_NAME}/,
+            hudName +
+            (
+              styles[style] === null ?
+                '' :
+                ' (' + styles[style] + ')'
+            )
+          )
+          .replace(
             /\${META_DESCRIPTION}/,
-            'the ' + hudName + ' HUD' +
+            'View a live render of the ' + hudName + ' HUD' +
             (
               styles[style] === null ?
                 '' :
                 ', ' + styles[style] + ' style'
-            )
+            ) +
+            '!'
           )
           .replace(
             /\${META_KEYWORDS}/,
@@ -206,7 +212,7 @@ for (const [ hudId, styles ] of hudsEntries) {
             /\${TITLE}/,
             hudName +
             (styles[style] === null ? '' : ' (' + styles[style] + ')') +
-            ' - '
+            ' - Dota 2 HUDs'
           )
       );
     }
@@ -218,9 +224,10 @@ for (const [ hudId, styles ] of hudsEntries) {
       __dirname + '/../build/' + hudId + '/index.html',
       index
         .replace(/\${BODY_CLASS}/, '')
-        .replace(/\${META_DESCRIPTION}/, 'the ' + hudName + ' HUD')
+        .replace(/\${HUD_NAME}/, hudName)
+        .replace(/\${META_DESCRIPTION}/, 'View a live render of the ' + hudName + ' HUD!')
         .replace(/\${META_KEYWORDS}/, metaKeywords)
-        .replace(/\${TITLE}/, hudName + ' - ')
+        .replace(/\${TITLE}/, hudName + ' - Dota 2 HUDs')
     );
   }
 }
@@ -231,23 +238,10 @@ fs.writeFileSync(
     .replace(/\${BODY_CLASS}/, '')
     .replace(/\${FAVICON}/, 'favicon.ico')
     .replace(/\${HUD_ID}/, 'default')
-    .replace(/\${MARKET_LINK}/, '')
-    .replace(/\${META_DESCRIPTION}/, 'all the Dota 2 HUDs')
+    .replace(/\${HUD_NAME}/, 'Default')
+    .replace(/\${META_DESCRIPTION}/, 'Try before you buy! View a live render of all the Dota 2 HUDs!')
     .replace(/\${META_KEYWORDS}/, 'dota 2 hud gallery, dota 2 hud skins, dota 2 huds, dota hud gallery, dota hud skins, dota huds')
-    .replace(/\${TITLE}/, '')
-);
-
-
-
-// huds.js
-const hudEntriesSort = ([ , hudName1 ], [ , hudName2 ]) =>
-  (Array.isArray(hudName1) ? hudName1[0] : hudName1) <
-  (Array.isArray(hudName2) ? hudName2[0] : hudName2) ?
-    -1 :
-    1;
-fs.writeFileSync(
-  __dirname + '/../build/huds.js',
-  'var HUDs = ' + JSON.stringify(hudsEntries.sort(hudEntriesSort)) + ';\n'
+    .replace(/\${TITLE}/, 'Dota 2 HUDs')
 );
 
 
@@ -255,10 +249,28 @@ fs.writeFileSync(
 // screen.css
 fs.writeFileSync(
   __dirname + '/../build/screen.css',
-  fs.readFileSync(__dirname + '/../src/screen.css').toString()
+  (
+    fs.readFileSync(__dirname + '/../src/styles/resolutions.css').toString() +
+    fs.readFileSync(__dirname + '/../src/styles/screen.css').toString()
+  )
     .replace(/\r?\n\s*/g, '')
     .replace(/\/\*.+?\*\//g, '')
     .replace(/;}/g, '}') + '\n'
+);
+
+
+
+// script.js
+const hudEntriesSort = ([ , hudName1 ], [ , hudName2 ]) =>
+  (Array.isArray(hudName1) ? hudName1[0] : hudName1) <
+  (Array.isArray(hudName2) ? hudName2[0] : hudName2) ?
+    -1 :
+    1;
+fs.writeFileSync(
+  __dirname + '/../build/script.js',
+  fs.readFileSync(__dirname + '/../src/scripts/resize.js').toString() +
+  fs.readFileSync(__dirname + '/../src/scripts/gallery.js').toString()
+    .replace(/process\.env\.HUDs/, JSON.stringify(hudsEntries.sort(hudEntriesSort))) + '\n'
 );
 
 

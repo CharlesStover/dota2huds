@@ -68,8 +68,7 @@ module.exports = {
   radiant:                          'Radiant Ore',
   redwarrior_hud:                   'Red Warrior',
   eslbrazil_hud:                    'Rei da Mesa',
-  'reign of maelrawn hud - fgcl':   'Reign of Maelrawn',
-  'reign_of_maelrawn_hud_-_fgcl':   'Reign of Maelrawn (?)', // Copy of Regin of Maelrawn?
+  'reign_of_maelrawn_hud_-_fgcl':   'Reign of Maelrawn',
   royal_crypt_hud:                  'Royal Crypt',
   sample:                           'Sample (?)', // Unused?
   hud_sandsofluxor:                 'Sands of Luxor',
