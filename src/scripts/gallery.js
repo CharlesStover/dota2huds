@@ -106,7 +106,7 @@
       // Create an <option>
       var option = document.createElement('option');
       if (location.pathname === '/' + styleId + '/') {
-        select.selectedIndex = y;
+        option.setAttribute('selected', 'selected');
       }
       option.setAttribute('value', styleId);
       option.appendChild(document.createTextNode(
