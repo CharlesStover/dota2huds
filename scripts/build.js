@@ -128,7 +128,11 @@ for (const [ hud, styles ] of hudsEntries) {
 
   fs.writeFileSync(
     __dirname + '/../build/' + hud + '/screen.css',
-    css
+    css + (
+      hud === 'default' ?
+        '#market{display:none}' :
+        ''
+    ) + '\n'
   );
 }
 
@@ -150,7 +154,8 @@ for (const [ hudId, styles ] of hudsEntries) {
   const index =
     indexHtml
       .replace(/\${FAVICON}/, hudId + '/icon.png')
-      .replace(/\${HUD_ID}/, hudId);
+      .replace(/\${HUD_ID}/, hudId)
+      .replace(/\${MARKET_QUERY}/, '&amp;q=' + encodeURIComponent(hudName));
 
   const metaKeywords =
     'dota ' + hudName + ', ' +
@@ -239,6 +244,7 @@ fs.writeFileSync(
     .replace(/\${FAVICON}/, 'favicon.ico')
     .replace(/\${HUD_ID}/, 'default')
     .replace(/\${HUD_NAME}/, 'Default')
+    .replace(/\${MARKET_QUERY}/, '')
     .replace(/\${META_DESCRIPTION}/, 'Try before you buy! View a live render of all the Dota 2 HUDs!')
     .replace(/\${META_KEYWORDS}/, 'dota 2 hud gallery, dota 2 hud skins, dota 2 huds, dota hud gallery, dota hud skins, dota huds')
     .replace(/\${TITLE}/, 'Dota 2 HUDs')
@@ -261,11 +267,15 @@ fs.writeFileSync(
 
 
 // script.js
-const hudEntriesSort = ([ , hudName1 ], [ , hudName2 ]) =>
-  (Array.isArray(hudName1) ? hudName1[0] : hudName1) <
-  (Array.isArray(hudName2) ? hudName2[0] : hudName2) ?
+const hudEntriesSort = ([ hudId1, hudName1 ], [ hudId2, hudName2 ]) =>
+  hudId1 === 'default' ?
     -1 :
-    1;
+    hudId2 === 'default' ?
+      1 :
+      (Array.isArray(hudName1) ? hudName1[0] : hudName1) <
+      (Array.isArray(hudName2) ? hudName2[0] : hudName2) ?
+        -1 :
+        1;
 fs.writeFileSync(
   __dirname + '/../build/script.js',
   fs.readFileSync(__dirname + '/../src/scripts/resize.js').toString() +

@@ -1,5 +1,5 @@
 a {
-  color: #C0C0C0;
+  color: #A4D007;
   cursor: url("/cursor-move.png"), pointer;
   text-decoration: none;
 }
@@ -15,6 +15,7 @@ body {
   background-repeat: no-repeat;
   background-size: auto 100%;
   color: #F0F0F0;
+  font-family: "Arial", "Helvetica", "Verdana", sans-serif;
   height: 100%;
   margin: 0;
   padding: 0;
@@ -39,6 +40,11 @@ select {
     bottom: 0;
   }
 
+cite {
+  display: block;
+  font-size: 0.75rem;
+}
+
 #day-night {
   -moz-animation: day-night 30s linear infinite;
   -o-animation: day-night 30s linear infinite;
@@ -50,6 +56,12 @@ div {
   background-repeat: no-repeat;
   background-size: 100% 100%;
   position: absolute;
+}
+
+h1 {
+  font-family: "Arial", "Helvetica", "Verdana", sans-serif;
+  margin: 0;
+  padding: 0;
 }
 
 html {
@@ -65,18 +77,59 @@ html {
 }
 
 main {
-  background-color: #202020;
-  border-radius: 0.25rem;
-  box-shadow:
-    0 1px 3px 0 rgba(0, 0, 0, 0.2),
-    0 1px 1px 0 rgba(0, 0, 0, 0.14),
-    0 2px 1px -1px rgba(0, 0, 0, 0.12);
-  line-height: 2em;
   margin-top: -6.25%;
+  position: absolute;
   text-align: center;
   top: 50%;
   width: 100%;
 }
+
+  main > section {
+    background-color: #202020;
+    border-radius: 0.25rem;
+    box-shadow:
+      0 1px 3px 0 rgba(0, 0, 0, 0.2),
+      0 1px 1px 0 rgba(0, 0, 0, 0.14),
+      0 2px 1px -1px rgba(0, 0, 0, 0.12);
+    display: inline-block;
+    padding: 1em;
+    text-align: center;
+  }
+
+    main > section > span:last-child {
+      align-items: center;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      line-height: 1.5rem;
+    }
+
+#market {
+  background-color: #A4D007;
+  background-image: -webkit-linear-gradient(top, #A4D007 5%, #536904 95%);
+  background-image: linear-gradient(to bottom, #A4D007 5%, #536904 95%);
+  border-radius: 2px;
+  border-width: 0;
+  display: inline-block;
+  line-height: 0;
+  padding: 1px;
+  text-align: center;
+  text-decoration: none;
+}
+
+  #market > span {
+    background-color: #799905;
+    background-image: -webkit-linear-gradient(top, #799905 5%, #536904 95%);
+    background-image: linear-gradient(to bottom, #799905 5%, #536904 95%);
+    border-radius: 2px;
+    color: #D2E885;
+    display: block;
+    font-size: 12px;
+    line-height: 20px;
+    padding: 0 15px;
+    text-align: center;
+    white-space: nowrap;
+  }
 
 #minimap {
   background-color: #101010;
@@ -100,7 +153,7 @@ select {
   color: #000000;
   display: block;
   font-size: 1em;
-  margin: 0 auto;
+  margin: 1em auto;
   padding: 0.25em;
 }
 
@@ -116,7 +169,7 @@ select {
   transform-origin: left bottom;
 }*/
 
-@media (max-height: 0.5625vw) {
+@media (max-aspect-ratio: 1.778) {
   body {
     background-size: 100% auto;
   }

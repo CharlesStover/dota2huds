@@ -1,6 +1,69 @@
-(function(HUDs, stylesheets, head, main, select) {
+(function(HUDs) {
+  var currentHud =
+    location.pathname === '/' ?
+      'default' :
+      location.pathname.match(/^\/(.+?)\/(?:\d+\/)?$/)[1];
+
+  var market = document.getElementById('market');
+  var changeHud = function(hudUrl) {
+    var hud = hudUrl.match(/^(.+?)(?:\/(\d+))?$/);
+    var hudId = hud[1];
+    var styleId = hud[2] ? parseInt(hud[2], 10) : null;
+    var hudEntry = HUDs.find(
+      function(_hudEntry) {
+        return _hudEntry[0] === hudId;
+      }
+    );
+    var hudName =
+      typeof hudEntry[1] === 'string' ?
+        hudEntry[1] :
+        hudEntry[1][0];
+    var styleName =
+      hudName + (
+        typeof hudEntry[1] === 'string' ||
+        hudEntry[1][styleId] === null ?
+          '' :
+          ' (' + hudEntry[1][styleId] + ')'
+      );
+    document.title =
+      hudId === 'default' ?
+        'Dota 2 HUDs' :
+        styleName + ' - Dota 2 HUDs';
+    document.getElementById('hud-' + currentHud).disabled = true;
+    document.getElementById('hud-' + hudId).disabled = false;
+    document.body.className =
+      styleId ?
+        'style' + styleId :
+        '';
+    market.setAttribute(
+      'href',
+      'http://steamcommunity.com/market/search?category_570_Hero%5B%5D=any&category_570_Slot%5B%5D=any&category_570_Type%5B%5D=tag_hud_skin&appid=570&q=' +
+      encodeURIComponent(hudName)
+    );
+    currentHud = hudId;
+    return [ hudId, styleName ];
+  };
+
+  // Build a <select>
+  var select = document.createElement('select');
+  select.addEventListener('change', function(e) {
+    var hudUrl = this.options[this.selectedIndex].getAttribute('value');
+    var hud = changeHud(hudUrl);
+    var hudId = hud[0];
+    var styleName = hud[1];
+    history.pushState(
+      null,
+      hudId === 'default' ?
+        'Dota 2 HUDs' :
+        styleName + ' - Dota 2 HUDs',
+      hudId === 'default' ?
+        '/' :
+        '/' + hudUrl + '/'
+    );
+  });
 
   // For each HUD,
+  var head = document.getElementsByTagName('head').item(0);
   var hudsLength = HUDs.length;
   for (var x = 0; x < hudsLength; x++) {
     var hud = HUDs[x];
@@ -10,8 +73,9 @@
     var styles = hasStyles ? hud[1].slice(1) : [ name ];
     var stylesLength = styles.length;
 
+    // Generate the style name.
     if (hasStyles) {
-      for (var y = 1; y < stylesLength; y++) {
+      for (var y = 0; y < stylesLength; y++) {
         styles[y] =
           styles[y] === null ?
             name :
@@ -19,74 +83,62 @@
       }
     }
 
+    // Create a stylesheet for this HUD.
     var link = document.createElement("link");
     link.disabled =
       (id === 'default' && location.pathname !== '/') ||
-      !location.pathname.match(new RegExp('^\\/' + id + '\\/'));
+      (id !== 'default' && location.pathname.substring(1, id.length + 1) !== id);
     link.setAttribute('href', '/' + id + '/screen.css');
-    link.setAttribute('hud-' + id);
+    link.setAttribute('id', 'hud-' + id);
     link.setAttribute('media', 'screen');
     link.setAttribute('rel', 'alternate stylesheet');
     link.setAttribute('title', name);
     link.setAttribute('type', 'text/css');
     head.appendChild(link);
-    document.body.removeChild(stylesheets.item(stylesheets.length - 1));
 
-    for (x = 0; x < stylesLength; x++) {
+    // For each style of the HUD,
+    for (var y = 0; y < stylesLength; y++) {
       var styleId =
-        x === 0 ?
+        y === 0 ?
           id :
-          id + '/' + x;
-      var option = document.createElement("option");
-      if (location.pathname === '/' + styleId) {
-        option.setAttribute('selected', 'selected');
+          id + '/' + y;
+
+      // Create an <option>
+      var option = document.createElement('option');
+      if (location.pathname === '/' + styleId + '/') {
+        select.selectedIndex = y;
       }
       option.setAttribute('value', styleId);
-      option.appendChild(document.createTextNode(name));
+      option.appendChild(document.createTextNode(
+        id === 'default' ?
+          'Select a HUD' :
+          styles[y]
+      ));
       select.appendChild(option);
     }
   }
 
-  // onchange
-  var change = function(id, alt) {
-      if (typeof(id) != "string") {
-        id = this.options[this.selectedIndex].getAttribute("value");
-        if (id.match(/\-\-\-\d+$/)) {
-          var alt = id.match(/\-\-\-(\d+)$/)[1];
-          id = id.split(/\-\-\-/)[0];
-        }
-        else
-          alt = false;
-        market.setAttribute(
-          "href",
-          "http://steamcommunity.com/market/search?category_570_Hero%5B%5D=any&category_570_Slot%5B%5D=any&category_570_Type%5B%5D=tag_hud_skin&appid=570" + (id != "default" ? "&q=" + HUDs[id][HUDs[id][0] ? 0 : 1] : "")
-        );
-      }
-      else if (typeof(alt) != "number")
-        alt = false;
-      document.getElementById(current).disabled = true;
-      current = id + (alt ? "---" + alt : "");
-      document.getElementById(current).disabled = false;
-      //history.pushState({id: id, alt: alt, selectedIndex: this.selectedIndex}, HUDs[id][alt ? alt + 1 : 1], permalink.getAttribute("href"));
-    };
-  select.addEventListener("change", change);
-  change('default');
-
-  // popstate
-  window.addEventListener(
-    'popstate',
-    function(event) {
-      select.selectedIndex = event.state.selectedIndex;
-      change(event.state.id, event.state.alt);
-    }
-  );
+  // Remove the below-the-fold stylesheet.
+  var stylesheets = document.getElementsByTagName('link');
+  document.body.removeChild(stylesheets.item(stylesheets.length - 1));
 
   // <select>
-  main.appendChild(select);
-})(
-  process.env.HUDs,
-  document.getElementsByTagName('link'),
-  document.getElementsByTagName('head').item(0),
-  document.getElementsByTagName('main').item(0),
-  document.createElement("select")
-);
+  var main = document.getElementsByTagName('main').item(0).getElementsByTagName('section').item(0);
+  main.insertBefore(select, main.lastChild);
+
+  window.addEventListener(
+    'popstate',
+    function() {
+      var hudUrl = location.pathname.substring(1, location.pathname.length - 1);
+      var options = select.getElementsByTagName('option');
+      var optionsLength = options.length;
+      for (var x = 0; x < optionsLength; x++) {
+        if (options.item(x).getAttribute('value') === hudUrl) {
+          select.selectedIndex = x;
+          break;
+        }
+      }
+      changeHud(hudUrl);
+    }
+  );
+})(process.env.HUDs);
