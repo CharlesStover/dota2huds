@@ -125,6 +125,7 @@
   // <select>
   var main = document.getElementsByTagName('main').item(0).getElementsByTagName('section').item(0);
   main.insertBefore(select, main.lastChild);
+  select.focus();
 
   window.addEventListener(
     'popstate',
