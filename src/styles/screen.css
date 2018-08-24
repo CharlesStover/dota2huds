@@ -77,7 +77,7 @@ html {
 }
 
 main {
-  margin-top: -6.25%;
+  margin-top: -80px;
   position: absolute;
   text-align: center;
   top: 50%;
@@ -169,7 +169,7 @@ select {
   transform-origin: left bottom;
 }*/
 
-@media (max-aspect-ratio: 1.778) {
+@media (min-aspect-ratio: 16/9) {
   body {
     background-size: 100% auto;
   }
