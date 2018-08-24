@@ -298,9 +298,14 @@ fs.writeFileSync(
     ])
     .urls(
       Object.keys(huds)
-        .map(hud => [ hud, 'yearly', 0.5, [
-          '../hud_skins/' + hud + '/icon.png',
-          '../hud_skins/' + hud + '/scoreboard/daynight.png'
-        ]])
+        .map(hud => [
+          hud === 'default' ? '' : hud + '/',
+          'yearly',
+          0.5,
+          [
+            '../hud_skins/' + hud + '/icon.png',
+            '../hud_skins/' + hud + '/scoreboard/daynight.png'
+          ]
+        ])
     )
 );
