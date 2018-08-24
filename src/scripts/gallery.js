@@ -21,9 +21,9 @@
     var styleName =
       hudName + (
         typeof hudEntry[1] === 'string' ||
-        hudEntry[1][styleId] === null ?
+        hudEntry[1][styleId + 1] === null ?
           '' :
-          ' (' + hudEntry[1][styleId] + ')'
+          ' (' + hudEntry[1][styleId + 1] + ')'
       );
     document.title =
       hudId === 'default' ?

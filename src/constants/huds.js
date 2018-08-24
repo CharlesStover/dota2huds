@@ -2,14 +2,13 @@ module.exports = {
   default:                          'Default',
   alliance:                         [ 'Alliance', 'Normal', 'Rainy' ],
   antiquity:                        'Antiquity',
-  armory:                           'Armory', // Not in game; used for MLG Stronghold HUD
   zodiac_hud:                       'Azure Constellation',
   bts_summit:                       'Beyond the Summit',
   black_monolith:                   'Black Monolith',
   brawl_basher:                     'Brawl Basher',
   brewery:                          'Brewery',
   tarantula:                        'Brood Hunter',
-  hud_chaosknight:                  'Chaos Knight (?)', // Not in game?
+  // hud_chaosknight:               'Chaos Knight', // custom daynight.png, otherwise empty
   diretide:                         'Cruel Diretide',
   crystalmana:                      'Crystallized Mana',
   curiosity_hud:                    'Curiosity',
@@ -20,14 +19,14 @@ module.exports = {
   detonation:                       'Detonation',
   weplay:                           'Dim Forest',
   dire:                             'Direstone',
-  diretide2013:                     'Diretide (2013)', // Not in game?
+  diretide2013:                     'Diretide (2013)', // not obtainable
   donbass_cup_hud:                  'DonBass Cup Season 3',
   _hud_skin__donbass_cup:           'DonBass Cup Season 3 (Copy)',
   dac_2015:                         'Dota 2 Asia Championship',
   dc_dayhud:                        [ 'DotaCinema', 'Dark', 'Bright' ],
   dragon_scale:                     'Dragon Scale',
   driftwood:                        'Driftwood',
-  hud_driftwood:                    'Driftwood (?)', // Copy of Driftwood?
+  // hud_driftwood:                 'Driftwood (Copy)', // empty
   dark_forest:                      'Elder Bark',
   empower:                          'Empowered',
   esl_one_hud_fortress:             'ESL One Fortress',
@@ -57,12 +56,12 @@ module.exports = {
   mana_pool:                        'Mana Pool',
   bane_delirium:                    'Midnight Terror',
   stronghold:                       'MLG Stronghold',
+  armory:                           'MLG Stronghold (Copy)',
   nature:                           'Nature',
   necropolis:                       'Necropolis',
   new_bloom:                        'New Bloom',
   od:                               'Omen',
   portal:                           'Portal',
-  power_surge:                      'Power Surge (?)', // Copy of Surge?
   starladder:                       'Powered Star',
   radiantentity:                    'Radiant Entity',
   radiant:                          'Radiant Ore',
@@ -70,7 +69,7 @@ module.exports = {
   eslbrazil_hud:                    'Rei da Mesa',
   'reign_of_maelrawn_hud_-_fgcl':   'Reign of Maelrawn',
   royal_crypt_hud:                  'Royal Crypt',
-  sample:                           'Sample (?)', // Unused?
+  sample:                           'Sample', // unobtainable
   hud_sandsofluxor:                 'Sands of Luxor',
   dreamleague:                      [ 'Scions of the Sky', null, 'Alternative Style' ],
   sltvx:                            'SLTV Star Series X',
@@ -79,6 +78,7 @@ module.exports = {
   premier_league:                   'Stone Ruin',
   bts3_hud:                         'The Summit 3',
   esp_surge_hud:                    'Surge',
+  power_surge:                      'Surge (Copy)',
   team_empire_hud:                  'Team Empire',
   techlabs2014:                     'Techlabs Moscow Cup 2014',
   crystal_wings:                    'Tempest Wing',
@@ -97,5 +97,5 @@ module.exports = {
   vici_gaming:                      'ViCi Gaming',
   virtus_pro:                       'Virtus.Pro',
   guardian_angel:                   'Winged Guardian',
-  workshop_ingame_test:             'Workshop In-Game Test (?)', // Unused?
+  // workshop_ingame_test:          'Workshop In-Game Test', // empty
 };

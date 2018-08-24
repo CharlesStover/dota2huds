@@ -129,7 +129,9 @@ for (const [ hud, styles ] of hudsEntries) {
   fs.writeFileSync(
     __dirname + '/../build/' + hud + '/screen.css',
     css + (
-      hud === 'default' ?
+      hud === 'default' ||
+      hud === 'diretide2013' ||
+      hud === 'sample' ?
         '#market{display:none}' :
         ''
     ) + '\n'
@@ -272,8 +274,8 @@ const hudEntriesSort = ([ hudId1, hudName1 ], [ hudId2, hudName2 ]) =>
     -1 :
     hudId2 === 'default' ?
       1 :
-      (Array.isArray(hudName1) ? hudName1[0] : hudName1) <
-      (Array.isArray(hudName2) ? hudName2[0] : hudName2) ?
+      (Array.isArray(hudName1) ? hudName1[0] : hudName1).toLowerCase() <
+      (Array.isArray(hudName2) ? hudName2[0] : hudName2).toLowerCase() ?
         -1 :
         1;
 fs.writeFileSync(
