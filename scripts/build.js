@@ -292,20 +292,25 @@ fs.writeFileSync(
   __dirname + '/../build/sitemap.xml',
   new SiteMap('https://dota2huds.com/')
     .setDir(__dirname)
-    .url('', 'monthly', 1, [
-      '../src/constants/huds.js',
-      'build.js'
-    ])
     .urls(
       Object.keys(huds)
-        .map(hud => [
-          hud === 'default' ? '' : hud + '/',
-          'yearly',
-          0.5,
-          [
-            '../hud_skins/' + hud + '/icon.png',
-            '../hud_skins/' + hud + '/scoreboard/daynight.png'
-          ]
-        ])
+        .map(hud =>
+          hud === 'default' ?
+            [
+              '',
+              'monthly',
+              1.0,
+              [ 'build.js' ]
+            ] :
+            [
+              hud + '/',
+              'yearly',
+              0.5,
+              [
+                '../hud_skins/' + hud + '/icon.png',
+                '../hud_skins/' + hud + '/scoreboard/daynight.png'
+              ]
+            ]
+        )
     )
 );
