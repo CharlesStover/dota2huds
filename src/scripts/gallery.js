@@ -83,18 +83,20 @@
       }
     }
 
-    // Create a stylesheet for this HUD.
-    var link = document.createElement("link");
-    link.disabled =
-      (id === 'default' && location.pathname !== '/') ||
-      (id !== 'default' && location.pathname.substring(1, id.length + 1) !== id);
-    link.setAttribute('href', '/' + id + '/screen.css');
-    link.setAttribute('id', 'hud-' + id);
-    link.setAttribute('media', 'screen');
-    link.setAttribute('rel', 'alternate stylesheet');
-    link.setAttribute('title', name);
-    link.setAttribute('type', 'text/css');
-    head.appendChild(link);
+    // Create a stylesheet for this HUD, if it wasn't eagerly loaded.
+    if (id !== currentHud) {
+      var link = document.createElement("link");
+      link.disabled =
+        (id === 'default' && location.pathname !== '/') ||
+        (id !== 'default' && location.pathname.substring(1, id.length + 1) !== id);
+      link.setAttribute('href', '/' + id + '/screen.css');
+      link.setAttribute('id', 'hud-' + id);
+      link.setAttribute('media', 'screen');
+      link.setAttribute('rel', 'alternate stylesheet');
+      link.setAttribute('title', name);
+      link.setAttribute('type', 'text/css');
+      head.appendChild(link);
+    }
 
     // For each style of the HUD,
     for (var y = 0; y < stylesLength; y++) {
@@ -117,10 +119,6 @@
       select.appendChild(option);
     }
   }
-
-  // Remove the below-the-fold stylesheet.
-  var stylesheets = document.getElementsByTagName('link');
-  document.body.removeChild(stylesheets.item(stylesheets.length - 1));
 
   // <select>
   var main = document.getElementsByTagName('main').item(0).getElementsByTagName('section').item(0);

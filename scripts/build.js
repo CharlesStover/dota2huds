@@ -154,7 +154,7 @@ for (const [ hudId, styles ] of hudsEntries) {
   const index =
     indexHtml
       .replace(/\${FAVICON}/, hudId + '/icon.png')
-      .replace(/\${HUD_ID}/, hudId)
+      .replace(/\${HUD_ID}/g, hudId)
       .replace(/\${MARKET_QUERY}/, '&amp;q=' + encodeURIComponent(hudName));
 
   const metaKeywords =
@@ -242,7 +242,7 @@ fs.writeFileSync(
   indexHtml
     .replace(/\${BODY_CLASS}/, '')
     .replace(/\${FAVICON}/, 'favicon.ico')
-    .replace(/\${HUD_ID}/, 'default')
+    .replace(/\${HUD_ID}/g, 'default')
     .replace(/\${HUD_NAME}/, 'Default')
     .replace(/\${MARKET_QUERY}/, '')
     .replace(/\${META_DESCRIPTION}/, 'Try before you buy! View a live render of all the Dota 2 HUDs!')
