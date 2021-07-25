@@ -1,14 +1,14 @@
 {
   "name": "dota2huds",
   "version": "1.0.0",
-  "author": "Charles Stover <webmaster@gamingmedley.com>",
+  "author": "Charles Stover <dota2huds@charlesstover.com>",
   "description": "A gallery of Dota 2 HUDs.",
   "license": "MIT",
-  "homepage": "https://dota2huds.com/",
+  "homepage": "https://charlesstover.github.io/dota2huds/",
   "main": "src/index.js",
-  "repository": "https://github.com/GamingMedley/dota2-hud-gallery.git",
+  "repository": "https://github.com/CharlesStover/dota2huds.git",
   "scripts": {
-    "build": "rm -rf build && node scripts/build.js",
+    "build": "rm -rf build && node scripts/build.js && cp -R ./hud_skins/* ./build && cp -R ./public/* ./build",
     "docker-build": "docker build --file Dockerfile --tag gamingmedley/dota2huds .",
     "docker-logs": "docker logs dota2huds",
     "docker-start": "docker run --detach --name dota2huds --network reverse-proxy gamingmedley/dota2huds",

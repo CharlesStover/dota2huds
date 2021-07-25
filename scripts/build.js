@@ -59,7 +59,7 @@ const cssIfFile = (element, hud, url, style = 0) => {
   return (
     fs.existsSync(__dirname + '/../hud_skins/' + hud + '/' + styleUrl) ?
       (style === 0 ? '' : '.style' + style + ' ') +
-      '#' + element + '{background-image:url(/' + hud + '/' + styleUrl + ')}' :
+      '#' + element + '{background-image:url(/dota2huds/' + hud + '/' + styleUrl + ')}' :
       ''
   );
 };
@@ -290,7 +290,7 @@ fs.writeFileSync(
 // sitemap.xml
 fs.writeFileSync(
   __dirname + '/../build/sitemap.xml',
-  new SiteMap('https://dota2huds.com/')
+  new SiteMap('https://charlesstover.github.io/dota2huds/')
     .setDir(__dirname)
     .urls(
       Object.keys(huds)

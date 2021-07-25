@@ -1,4 +1,4 @@
-# [Dota2HUDs.com](https://dota2huds.com/)
+# Dota 2 HUDs
 View a live demo of any Dota 2 HUD.
 
 ## Commands
