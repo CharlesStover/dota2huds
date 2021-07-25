@@ -50,14 +50,14 @@
 }
 
 #icon-preview-bottom {
-  background-image: url("/bottom-4-3.png");
+  background-image: url("/dota2huds/bottom-4-3.png");
   height: 335px;
   width: 2134px;
   left: 0;
 }
 
 #icon-preview-top {
-  background-image: url("/top-4-3.png");
+  background-image: url("/dota2huds/top-4-3.png");
   height: 91px;
   width: 2134px;
   left: 0;
@@ -212,14 +212,14 @@
   }
 
   #icon-preview-bottom {
-    background-image: url("/bottom-16-10.png");
+    background-image: url("/dota2huds/bottom-16-10.png");
     height: 431px;
     width: 2554px;
     left: 0;
   }
 
   #icon-preview-top {
-    background-image: url("/top-16-10.png");
+    background-image: url("/dota2huds/top-16-10.png");
     height: 91px;
     width: 2554px;
     left: 0;
@@ -376,14 +376,14 @@
   }
 
   #icon-preview-bottom {
-    background-image: url("/bottom-16-9.png");
+    background-image: url("/dota2huds/bottom-16-9.png");
     height: 387px;
     width: 2553px;
     left: 0;
   }
 
   #icon-preview-top {
-    background-image: url("/top-16-9.png");
+    background-image: url("/dota2huds/top-16-9.png");
     height: 90px;
     width: 2560px;
     left: 0;

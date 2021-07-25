@@ -1,6 +1,6 @@
 a {
   color: #A4D007;
-  cursor: url("/cursor-move.png"), pointer;
+  cursor: url("/dota2huds/cursor-move.png"), pointer;
   text-decoration: none;
 }
 
@@ -10,7 +10,7 @@ a {
 
 body {
   background-color: #252525;
-  background-image: url("/background.jpg");
+  background-image: url("/dota2huds/background.jpg");
   background-position: center center;
   background-repeat: no-repeat;
   background-size: auto 100%;
@@ -24,7 +24,7 @@ body {
 
 body,
 select {
-  cursor: url("/cursor-default.png"), default;
+  cursor: url("/dota2huds/cursor-default.png"), default;
 }
 
 #bottom {
@@ -133,7 +133,7 @@ main {
 
 #minimap {
   background-color: #101010;
-  background-image: url("/minimap.jpg");
+  background-image: url("/dota2huds/minimap.jpg");
   background-position: center center;
   background-size: 100% 100%;
 }
