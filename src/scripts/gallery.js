@@ -57,8 +57,8 @@
         'Dota 2 HUDs' :
         styleName + ' - Dota 2 HUDs',
       hudId === 'default' ?
-        '/' :
-        '/' + hudUrl + '/'
+        '/dota2huds/' :
+        '/dota2huds/' + hudUrl + '/'
     );
   });
 
@@ -107,7 +107,7 @@
 
       // Create an <option>
       var option = document.createElement('option');
-      if (location.pathname === '/' + styleId + '/') {
+      if (location.pathname === '/dota2huds/' + styleId + '/') {
         option.setAttribute('selected', 'selected');
       }
       option.setAttribute('value', styleId);
@@ -128,7 +128,7 @@
   window.addEventListener(
     'popstate',
     function() {
-      var hudUrl = location.pathname.substring(1, location.pathname.length - 1);
+      var hudUrl = location.pathname.substring(11, location.pathname.length - 1);
       var options = select.getElementsByTagName('option');
       var optionsLength = options.length;
       for (var x = 0; x < optionsLength; x++) {
