@@ -19,9 +19,9 @@
 })();
 (function(HUDs) {
   var currentHud =
-    location.pathname === '/' ?
+    location.pathname === '/dota2huds/' ?
       'default' :
-      location.pathname.match(/^\/(.+?)\/(?:\d+\/)?$/)[1];
+      location.pathname.match(/^\/dota2huds\/(.+?)\/(?:\d+\/)?$/)[1];
 
   var market = document.getElementById('market');
   var changeHud = function(hudUrl) {
@@ -106,9 +106,9 @@
     if (id !== currentHud) {
       var link = document.createElement("link");
       link.disabled =
-        (id === 'default' && location.pathname !== '/') ||
-        (id !== 'default' && location.pathname.substring(1, id.length + 1) !== id);
-      link.setAttribute('href', '/' + id + '/screen.css');
+        (id === 'default' && location.pathname !== '/dota2huds/') ||
+        (id !== 'default' && location.pathname.substring(11, id.length + 11) !== id);
+      link.setAttribute('href', '/dota2huds/' + id + '/screen.css');
       link.setAttribute('id', 'hud-' + id);
       link.setAttribute('media', 'screen');
       link.setAttribute('rel', 'alternate stylesheet');
